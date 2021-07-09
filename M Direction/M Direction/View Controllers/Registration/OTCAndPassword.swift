@@ -116,6 +116,8 @@ final class OTCAndPassword: GradientedVC {
     }
     
     @objc private func validateActivationCode() {
+        view.endEditing(true)
+        
         guard let phone = phone else { return }
         guard let recievedCode = otc.text else { return }
         let data = ValidateActivationCode(phone: phone, activationCode: recievedCode)
@@ -141,7 +143,7 @@ final class OTCAndPassword: GradientedVC {
     }
     
     private func navigateToTheNextViewController(type: UserType, id: Int, password: String) {
-        let nextVC: PersonalInfoVC
+        let nextVC: IdentifiableUserViewController
         
         switch type {
         case .driver:
@@ -151,7 +153,6 @@ final class OTCAndPassword: GradientedVC {
         }
         
         nextVC.id = id
-        nextVC.password = password
         navigationController?.show(nextVC, sender: nil)
     }
     

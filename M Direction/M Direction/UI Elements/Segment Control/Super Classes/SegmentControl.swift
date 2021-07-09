@@ -31,14 +31,9 @@ class SegmentControl: UIView {
     }
     
     private func setupStackView() {
-        container.translatesAutoresizingMaskIntoConstraints = false
         container.axis = .horizontal
         container.alignment = .center
-        addSubview(container)
-        container.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        container.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        container.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        container.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        container.pinTo(self)
     }
     
     func setupSubviews() {}

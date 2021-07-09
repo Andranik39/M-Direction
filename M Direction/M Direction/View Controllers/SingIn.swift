@@ -92,6 +92,8 @@ final class SingIn: GradientedVC {
     }
     
     @objc private func singIn() {
+        view.endEditing(true)
+        
         guard let number = phone.text else {
             print("There is no number inputed.")
             return
@@ -110,7 +112,16 @@ final class SingIn: GradientedVC {
         guard let segment = userTypes.selectedSegment as? UserSegment else { return }
         guard let type = segment.state else { return }
         
-        network.singIn(type, data: encoded) { statusCode in
+        var requestType: NetworkManager.RequestType!
+        
+        switch type {
+        case .driver:
+            requestType = .driverLoginRequest
+        case .passenger:
+            requestType = .passengerLoginRequest
+        }
+        
+        network.post(data: encoded, as: requestType) { statusCode in
 //            print(statusCode ?? "nothing was recieved")
             if statusCode == 200 {
                 DispatchQueue.main.async {

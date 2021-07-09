@@ -9,7 +9,7 @@ import UIKit
 
 class GradientedVC: UIViewController {
     
-    let content = UIView()
+    let content = ContainerView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,14 +19,8 @@ class GradientedVC: UIViewController {
     
     private func setupScrollView() {
         let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.pinTo(view)
 //        scrollView.alwaysBounceVertical = true
-        view.addSubview(scrollView)
-        
-        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
         content.translatesAutoresizingMaskIntoConstraints = false
 //        content.backgroundColor = .systemTeal
@@ -50,14 +44,15 @@ class GradientedVC: UIViewController {
         gradient.frame = view.bounds
         view.layer.addSublayer(gradient)
     }
-    
+}
+
+final class ContainerView: UIView {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
-        view.endEditing(true)
+        endEditing(true)
     }
 }
 
-class PersonalInfoVC: GradientedVC {
+class IdentifiableUserViewController: GradientedVC {
     var id: Int?
-    var password: String?
 }

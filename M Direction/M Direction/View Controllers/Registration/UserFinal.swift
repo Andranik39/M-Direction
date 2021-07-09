@@ -7,8 +7,9 @@
 
 import UIKit
 
-final class UserFinal: PersonalInfoVC {
+final class UserFinal: IdentifiableUserViewController {
     
+    var password: String?
     private var name: TextField!
     private let network = NetworkManager.shared
 
@@ -66,6 +67,8 @@ final class UserFinal: PersonalInfoVC {
     }
     
     @objc private func completeRegistration() {
+        view.endEditing(true)
+        
         guard let id = id else { return }
         guard let password = password else { return }
         guard let userName = name.text else { return }
@@ -76,10 +79,12 @@ final class UserFinal: PersonalInfoVC {
             return
         }
         
-        network.completeRegistration(data: encoded) { statusCode in
+        network.post(data: encoded, as: .passengerComleteRegistrationRequest) { statusCode in
 //            print(statusCode ?? "nothing was recieved")
-            DispatchQueue.main.async {
-                self.navigateToTheNextViewController()
+            if statusCode == 200 {
+                DispatchQueue.main.async {
+                    self.navigateToTheNextViewController()
+                }
             }
         }
     }

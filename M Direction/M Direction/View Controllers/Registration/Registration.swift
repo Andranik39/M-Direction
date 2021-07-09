@@ -92,13 +92,7 @@ final class RegistrationVC: GradientedVC {
             let termsAndConds = UILabel()
             termsAndConds.numberOfLines = 0
             termsAndConds.text = "Սեղմելով <<Գրանցվել>> կոճակը՝ Դուք ընդունում եք օգտագործման պայմանները"
-            termsAndConds.translatesAutoresizingMaskIntoConstraints = false
-            
-            content.addSubview(termsAndConds)
-            
-            termsAndConds.bottomAnchor.constraint(equalTo: content.bottomAnchor, constant: -55).isActive = true
-            termsAndConds.leadingAnchor.constraint(equalTo: content.leadingAnchor, constant: 29).isActive = true
-            termsAndConds.trailingAnchor.constraint(equalTo: content.trailingAnchor, constant: -140).isActive = true
+            termsAndConds.pinTo(content, leading: 29, top: nil, trailing: -140, bottom: -55)
             termsAndConds.font = .systemFont(ofSize: 14)
             
 //        termsAndConds.topAnchor.constraint(equalTo: nextButton.bottomAnchor, constant: 175).isActive = true
@@ -130,6 +124,8 @@ final class RegistrationVC: GradientedVC {
     }
     
     @objc private func sendPhoneNumber() {
+        view.endEditing(true)
+        
         guard let number = input.text else {
             print("There is no number inputed.")
             return
@@ -143,7 +139,16 @@ final class RegistrationVC: GradientedVC {
         guard let segment = userTypes.selectedSegment as? UserSegment else { return }
         guard let type = segment.state else { return }
         
-        network.sendActivationCode(type, data: encoded) { statusCode in
+        var requestType: NetworkManager.RequestType!
+        
+        switch type {
+        case .driver:
+            requestType = .driverSendActivationCodeRequest
+        case .passenger:
+            requestType = .passengerSendActivationCodeRequest
+        }
+        
+        network.post(data: encoded, as: requestType) { statusCode in
 //            print(statusCode ?? "nothing was recieved")
             if statusCode == 200 {
                 DispatchQueue.main.async {

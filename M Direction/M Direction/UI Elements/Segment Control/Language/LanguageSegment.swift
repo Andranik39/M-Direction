@@ -14,15 +14,10 @@ final class LanguageSegment: Segment {
     private let shortcut = UILabel()
     
     override func setupSubviews() {
-        container.translatesAutoresizingMaskIntoConstraints = false
         container.axis = .vertical
         container.alignment = .center
         container.spacing = 6
-        addSubview(container)
-        container.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        container.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        container.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        container.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        container.pinTo(self)
         
         image.translatesAutoresizingMaskIntoConstraints = false
         image.widthAnchor.constraint(equalToConstant: 40).isActive = true

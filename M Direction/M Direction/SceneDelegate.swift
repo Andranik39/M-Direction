@@ -18,12 +18,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         //        guard let _ = (scene as? UIWindowScene) else { return }
         
-        let rootView = DriverPersonalInfo()
+//        let rootView = MainMenu()
+        let rootView = GetRoute()
+//        let rootView = DriverPersonalInfo()
 //        let rootView = MainVC()
 
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             let navigationView = UINavigationController(rootViewController: rootView)
+//            navigationView.navigationBar.prefersLargeTitles = true
+            navigationView.isNavigationBarHidden = true
+            navigationView.navigationBar.tintColor = UIColor(red: 0.169, green: 0.424, blue: 0.227, alpha: 1)
+//            navigationView.navigationBar.tintColor = UIColor(red: 0.204, green: 0.812, blue: 0.286, alpha: 1)
 //            navigationView.isNavigationBarHidden = true
             window.rootViewController = navigationView
             self.window = window

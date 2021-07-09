@@ -26,7 +26,7 @@ struct GenderCategories {
     let title: String
     let value: Gender
     
-    enum Gender {
+    enum Gender: Int {
         case male, female
     }
 }

@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D075093268CFE7900C709F0 /* AddImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D075092268CFE7900C709F0 /* AddImage.swift */; };
 		6D20364B2688827D00D63E56 /* UserFinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D20364A2688827D00D63E56 /* UserFinal.swift */; };
 		6D20365026888E8700D63E56 /* SingIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D20364F26888E8700D63E56 /* SingIn.swift */; };
 		6D2ECB5A2684D52000EBFD7E /* JSON models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2ECB592684D52000EBFD7E /* JSON models.swift */; };
+		6D56E21C268F8441008D9CF9 /* PickerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D56E21B268F8441008D9CF9 /* PickerModel.swift */; };
+		6D9FC3CD2690F38400453BF9 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9FC3CC2690F38400453BF9 /* Account.swift */; };
+		6D9FC3D62690FB7500453BF9 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9FC3D52690FB7500453BF9 /* MainMenu.swift */; };
 		6DD0489D267F593B0018389C /* OTCAndPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD0489C267F593B0018389C /* OTCAndPassword.swift */; };
 		6DD048A6267F762F0018389C /* TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD048A5267F762F0018389C /* TextFieldDelegate.swift */; };
 		6DD14C9F267BCB3C00578DFA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD14C9E267BCB3C00578DFA /* AppDelegate.swift */; };
@@ -25,17 +29,23 @@
 		6DD14CEA267BD52800578DFA /* Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD14CE9267BD52800578DFA /* Segment.swift */; };
 		6DD14CEF267BD6DB00578DFA /* Languages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD14CEE267BD6DB00578DFA /* Languages.swift */; };
 		6DD14CF8267BDB7100578DFA /* LanguageSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD14CF7267BDB7100578DFA /* LanguageSegment.swift */; };
-		6DE944C1267E5B9900567DAE /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE944C0267E5B9900567DAE /* Button.swift */; };
+		6DD670C126932639008193E7 /* MenuDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD670C026932639008193E7 /* MenuDataSource.swift */; };
+		6DD670C726932995008193E7 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD670C626932995008193E7 /* MenuItem.swift */; };
+		6DD670CC269334A5008193E7 /* Support.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD670CB269334A5008193E7 /* Support.swift */; };
+		6DD670D1269344D4008193E7 /* MenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD670D0269344D4008193E7 /* MenuDelegate.swift */; };
+		6DE944C1267E5B9900567DAE /* MainButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE944C0267E5B9900567DAE /* MainButton.swift */; };
 		6DE944CB267E796800567DAE /* SuperVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE944CA267E796800567DAE /* SuperVC.swift */; };
 		6DE944D9267E940D00567DAE /* Registration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE944D8267E940D00567DAE /* Registration.swift */; };
 		6DE983C62688A84500B323F0 /* DriversLicense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE983C52688A84500B323F0 /* DriversLicense.swift */; };
 		6DE983CB2688A86700B323F0 /* DriversCarFinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE983CA2688A86700B323F0 /* DriversCarFinal.swift */; };
+		6DECFF012690CFF600320F24 /* ImagePickerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DECFF002690CFF600320F24 /* ImagePickerModel.swift */; };
 		6DEDF3D3267D0F9A00F17425 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEDF3D2267D0F9A00F17425 /* Constants.swift */; };
 		6DEDF3DC267D1DE300F17425 /* SegmentModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEDF3DB267D1DE300F17425 /* SegmentModels.swift */; };
 		6DEDF3E4267D270A00F17425 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEDF3E3267D270A00F17425 /* TextField.swift */; };
 		6DEDF3ED267D276E00F17425 /* UserCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEDF3EC267D276E00F17425 /* UserCategories.swift */; };
 		6DEDF3F2267D278300F17425 /* UserSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEDF3F1267D278300F17425 /* UserSegment.swift */; };
 		6DF0ED6A2686772E00E490D4 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF0ED692686772E00E490D4 /* NetworkManager.swift */; };
+		6DF51C452696529600D64EFE /* GetRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF51C442696529600D64EFE /* GetRoute.swift */; };
 		6DF9E43926885AD60020C2DE /* DriverPersonalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF9E43826885AD60020C2DE /* DriverPersonalInfo.swift */; };
 		6DF9E44726886B880020C2DE /* GenderCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF9E44626886B880020C2DE /* GenderCategories.swift */; };
 		6DF9E44C26886BA20020C2DE /* GenderSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF9E44B26886BA20020C2DE /* GenderSegment.swift */; };
@@ -59,9 +69,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6D075092268CFE7900C709F0 /* AddImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddImage.swift; sourceTree = "<group>"; };
 		6D20364A2688827D00D63E56 /* UserFinal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFinal.swift; sourceTree = "<group>"; };
 		6D20364F26888E8700D63E56 /* SingIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingIn.swift; sourceTree = "<group>"; };
 		6D2ECB592684D52000EBFD7E /* JSON models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSON models.swift"; sourceTree = "<group>"; };
+		6D56E21B268F8441008D9CF9 /* PickerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerModel.swift; sourceTree = "<group>"; };
+		6D9FC3CC2690F38400453BF9 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		6D9FC3D52690FB7500453BF9 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		6DD0489C267F593B0018389C /* OTCAndPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTCAndPassword.swift; sourceTree = "<group>"; };
 		6DD048A5267F762F0018389C /* TextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldDelegate.swift; sourceTree = "<group>"; };
 		6DD14C9B267BCB3C00578DFA /* M Direction.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "M Direction.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,17 +97,23 @@
 		6DD14CE9267BD52800578DFA /* Segment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Segment.swift; sourceTree = "<group>"; };
 		6DD14CEE267BD6DB00578DFA /* Languages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Languages.swift; sourceTree = "<group>"; };
 		6DD14CF7267BDB7100578DFA /* LanguageSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSegment.swift; sourceTree = "<group>"; };
-		6DE944C0267E5B9900567DAE /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		6DD670C026932639008193E7 /* MenuDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDataSource.swift; sourceTree = "<group>"; };
+		6DD670C626932995008193E7 /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
+		6DD670CB269334A5008193E7 /* Support.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Support.swift; sourceTree = "<group>"; };
+		6DD670D0269344D4008193E7 /* MenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDelegate.swift; sourceTree = "<group>"; };
+		6DE944C0267E5B9900567DAE /* MainButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainButton.swift; sourceTree = "<group>"; };
 		6DE944CA267E796800567DAE /* SuperVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperVC.swift; sourceTree = "<group>"; };
 		6DE944D8267E940D00567DAE /* Registration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Registration.swift; sourceTree = "<group>"; };
 		6DE983C52688A84500B323F0 /* DriversLicense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriversLicense.swift; sourceTree = "<group>"; };
 		6DE983CA2688A86700B323F0 /* DriversCarFinal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriversCarFinal.swift; sourceTree = "<group>"; };
+		6DECFF002690CFF600320F24 /* ImagePickerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerModel.swift; sourceTree = "<group>"; };
 		6DEDF3D2267D0F9A00F17425 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		6DEDF3DB267D1DE300F17425 /* SegmentModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentModels.swift; sourceTree = "<group>"; };
 		6DEDF3E3267D270A00F17425 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		6DEDF3EC267D276E00F17425 /* UserCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCategories.swift; sourceTree = "<group>"; };
 		6DEDF3F1267D278300F17425 /* UserSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSegment.swift; sourceTree = "<group>"; };
 		6DF0ED692686772E00E490D4 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		6DF51C442696529600D64EFE /* GetRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRoute.swift; sourceTree = "<group>"; };
 		6DF9E43826885AD60020C2DE /* DriverPersonalInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverPersonalInfo.swift; sourceTree = "<group>"; };
 		6DF9E44626886B880020C2DE /* GenderCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderCategories.swift; sourceTree = "<group>"; };
 		6DF9E44B26886BA20020C2DE /* GenderSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderSegment.swift; sourceTree = "<group>"; };
@@ -124,12 +144,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6D07508B268CFE4600C709F0 /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				6DE944C0267E5B9900567DAE /* MainButton.swift */,
+				6D075092268CFE7900C709F0 /* AddImage.swift */,
+			);
+			path = Button;
+			sourceTree = "<group>";
+		};
 		6D20365426889EDB00D63E56 /* Driver */ = {
 			isa = PBXGroup;
 			children = (
 				6DF9E43826885AD60020C2DE /* DriverPersonalInfo.swift */,
 				6DE983C52688A84500B323F0 /* DriversLicense.swift */,
 				6DE983CA2688A86700B323F0 /* DriversCarFinal.swift */,
+				6DECFF002690CFF600320F24 /* ImagePickerModel.swift */,
+				6D56E21B268F8441008D9CF9 /* PickerModel.swift */,
 			);
 			path = Driver;
 			sourceTree = "<group>";
@@ -141,6 +172,17 @@
 				6DF0ED692686772E00E490D4 /* NetworkManager.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		6D9FC3D12690F3CE00453BF9 /* Registration */ = {
+			isa = PBXGroup;
+			children = (
+				6DE944D8267E940D00567DAE /* Registration.swift */,
+				6DD0489C267F593B0018389C /* OTCAndPassword.swift */,
+				6D20364A2688827D00D63E56 /* UserFinal.swift */,
+				6D20365426889EDB00D63E56 /* Driver */,
+			);
+			path = Registration;
 			sourceTree = "<group>";
 		};
 		6DD048A1267F76110018389C /* TextField */ = {
@@ -178,6 +220,7 @@
 				6DD14C9E267BCB3C00578DFA /* AppDelegate.swift */,
 				6DD14CA0267BCB3C00578DFA /* SceneDelegate.swift */,
 				6DEDF3D2267D0F9A00F17425 /* Constants.swift */,
+				6DD670CB269334A5008193E7 /* Support.swift */,
 				6D2ECB5E2684D53100EBFD7E /* Networking */,
 				6DE944C9267E793E00567DAE /* View Controllers */,
 				6DE944C5267E5BC800567DAE /* UI Elements */,
@@ -229,11 +272,22 @@
 			path = "Super Classes";
 			sourceTree = "<group>";
 		};
+		6DD670B926932526008193E7 /* Side-Out Menu */ = {
+			isa = PBXGroup;
+			children = (
+				6D9FC3D52690FB7500453BF9 /* MainMenu.swift */,
+				6DD670C026932639008193E7 /* MenuDataSource.swift */,
+				6DD670D0269344D4008193E7 /* MenuDelegate.swift */,
+				6DD670C626932995008193E7 /* MenuItem.swift */,
+			);
+			path = "Side-Out Menu";
+			sourceTree = "<group>";
+		};
 		6DE944C5267E5BC800567DAE /* UI Elements */ = {
 			isa = PBXGroup;
 			children = (
 				6DD048A1267F76110018389C /* TextField */,
-				6DE944C0267E5B9900567DAE /* Button.swift */,
+				6D07508B268CFE4600C709F0 /* Button */,
 				6DD14CE2267BD4E200578DFA /* Segment Control */,
 			);
 			path = "UI Elements";
@@ -245,10 +299,10 @@
 				6DE944CA267E796800567DAE /* SuperVC.swift */,
 				6DD14CA2267BCB3C00578DFA /* Main.swift */,
 				6D20364F26888E8700D63E56 /* SingIn.swift */,
-				6DE944D8267E940D00567DAE /* Registration.swift */,
-				6DD0489C267F593B0018389C /* OTCAndPassword.swift */,
-				6D20364A2688827D00D63E56 /* UserFinal.swift */,
-				6D20365426889EDB00D63E56 /* Driver */,
+				6D9FC3D12690F3CE00453BF9 /* Registration */,
+				6D9FC3CC2690F38400453BF9 /* Account.swift */,
+				6DF51C442696529600D64EFE /* GetRoute.swift */,
+				6DD670B926932526008193E7 /* Side-Out Menu */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -419,22 +473,32 @@
 				6DEDF3ED267D276E00F17425 /* UserCategories.swift in Sources */,
 				6DF9E44C26886BA20020C2DE /* GenderSegment.swift in Sources */,
 				6DD14CEA267BD52800578DFA /* Segment.swift in Sources */,
+				6DECFF012690CFF600320F24 /* ImagePickerModel.swift in Sources */,
+				6DF51C452696529600D64EFE /* GetRoute.swift in Sources */,
 				6DD14CA9267BCB3C00578DFA /* M_Direction.xcdatamodeld in Sources */,
 				6DD14CEF267BD6DB00578DFA /* Languages.swift in Sources */,
+				6D9FC3D62690FB7500453BF9 /* MainMenu.swift in Sources */,
 				6DD14C9F267BCB3C00578DFA /* AppDelegate.swift in Sources */,
 				6DE944D9267E940D00567DAE /* Registration.swift in Sources */,
-				6DE944C1267E5B9900567DAE /* Button.swift in Sources */,
+				6D9FC3CD2690F38400453BF9 /* Account.swift in Sources */,
+				6DE944C1267E5B9900567DAE /* MainButton.swift in Sources */,
+				6DD670C726932995008193E7 /* MenuItem.swift in Sources */,
 				6DE983CB2688A86700B323F0 /* DriversCarFinal.swift in Sources */,
 				6DF0ED6A2686772E00E490D4 /* NetworkManager.swift in Sources */,
 				6DD14CA1267BCB3C00578DFA /* SceneDelegate.swift in Sources */,
+				6DD670CC269334A5008193E7 /* Support.swift in Sources */,
+				6D075093268CFE7900C709F0 /* AddImage.swift in Sources */,
+				6DD670C126932639008193E7 /* MenuDataSource.swift in Sources */,
 				6DD0489D267F593B0018389C /* OTCAndPassword.swift in Sources */,
 				6DD14CDE267BD48800578DFA /* SegmentControl.swift in Sources */,
 				6DD14CF8267BDB7100578DFA /* LanguageSegment.swift in Sources */,
 				6D20364B2688827D00D63E56 /* UserFinal.swift in Sources */,
 				6DEDF3D3267D0F9A00F17425 /* Constants.swift in Sources */,
+				6DD670D1269344D4008193E7 /* MenuDelegate.swift in Sources */,
 				6DEDF3F2267D278300F17425 /* UserSegment.swift in Sources */,
 				6DF9E43926885AD60020C2DE /* DriverPersonalInfo.swift in Sources */,
 				6DEDF3DC267D1DE300F17425 /* SegmentModels.swift in Sources */,
+				6D56E21C268F8441008D9CF9 /* PickerModel.swift in Sources */,
 				6D20365026888E8700D63E56 /* SingIn.swift in Sources */,
 				6DE983C62688A84500B323F0 /* DriversLicense.swift in Sources */,
 			);

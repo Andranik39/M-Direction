@@ -13,14 +13,8 @@ final class UserSegment: Segment {
     private(set) var state: UserType?
     
     override func setupSubviews() {
-        title.translatesAutoresizingMaskIntoConstraints = false
         title.font = .systemFont(ofSize: 26)
-        addSubview(title)
-        
-        title.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        title.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        title.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        title.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        title.pinTo(self)
     }
     
     override func select() {
