@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MenuItem: UITableViewCell {
+class MenuItemCell: UITableViewCell {
     
     static var identifier = "MenuItem"
     
@@ -79,7 +79,7 @@ class MenuItem: UITableViewCell {
         }()
     }
     
-    func setup(with string: String) {
-        title.text = string
+    func setup(with item: MenuItem) {
+        title.text = item.title
     }
 }

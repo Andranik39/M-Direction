@@ -17,7 +17,7 @@ final class GetRoute: Account {
             button.addTarget(self, action: #selector(getRoute), for: .touchUpInside)
             button.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(button)
-            button.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+            button.centerYAnchor.constraint(equalTo: view.layoutMarginsGuide.centerYAnchor).isActive = true
             button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
             button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive = true
             
