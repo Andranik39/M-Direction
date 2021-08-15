@@ -14,6 +14,8 @@ struct SendActivationCode: Encodable {
 struct ValidateActivationCode: Encodable {
     let phone: String
     let activationCode: String
+    let password: String
+    var name: String? = nil
 }
 
 struct ActivationCodeResponce: Decodable {
@@ -32,17 +34,18 @@ struct CompleteRegistration: Encodable {
 
 // Registration steps for driver
 
-struct RegisterDriverFirstStage: Encodable {
-    let id: Int
-    let password: String
-}
+//struct RegisterDriverFirstStage: Encodable {
+//    let phone: String
+//    let activationCode: String
+//    let password: String
+//}
 
 struct RegisterDriverSecondStage: Encodable {
     let id: Int
     let firstName: String
     let lastName: String
     let gender: Int
-    var birthday: String = ""
+    var birthday: String
 }
 
 struct RegisterDriverThirdStage: Encodable {
@@ -59,12 +62,17 @@ struct RegisterDriverFourthStage: Encodable {
 }
 
 struct CarInfo: Encodable {
-    let brand: String
-    let model: String
-    let color: String
+    let brand: CarParameter
+    let model: CarParameter
+    let color: CarParameter
     var maxSeatCount: Int = 0
     let releaseDate: String
     let carNumber: String
+}
+
+struct CarParameter: Codable, Pickerable {
+    var id: Int
+    var name: String
 }
 
 // Sing in
@@ -73,3 +81,10 @@ struct SingInForm: Encodable {
     let phone: String
     let password: String
 }
+
+// Get Request responses
+
+//struct CarMark: Decodable, Pickerable {
+//    var id: Int?
+//    var name: String
+//}

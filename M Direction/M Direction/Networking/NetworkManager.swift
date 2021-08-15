@@ -18,9 +18,8 @@ class NetworkManager {
         case passengerSendActivationCodeRequest = "Passenger/SendActivationCode"
         case driverSendActivationCodeRequest = "Driver/SendActivationCode"
         
-        case passengerComleteRegistrationRequest = "Passenger/CompleteRegistration"
-        case registerDriverFirstStageRequest = "Driver/RegisterDriverFirstStage"
-        case registerDriverSecondStageRequest = "Driver/RegisterDriverSecondStage"
+//        case registerDriverFirstStageRequest = "Driver/DriverFirstStage"
+        case registerDriverSecondStageRequest = "Driver/DriverSecondStage"
         case registerDriverThirdStageRequest = "Driver/RegisterDriverThirdStage"
         case registerDriverFourthStageRequest = "Driver/RegisterDriverFourthStage"
     }
@@ -68,7 +67,8 @@ class NetworkManager {
 //    }
     
     func validateActivationCode(_ userType: UserType, data: Data, complition: @escaping (Int?) -> Void) {
-        let urlRowValue = urlString + userType.rawValue + "/ValidateActivationCode"
+        let destination = userType == .driver ? "Driver/DriverFirstStage": "Passenger/Registration"
+        let urlRowValue = urlString + destination
         let url = URL(string: urlRowValue)!
         let request: URLRequest = {
             var request = URLRequest(url: url)
@@ -90,7 +90,7 @@ class NetworkManager {
             case .driver:
                 complition(decoded?.driverId)
             case .passenger:
-                complition(decoded?.passengerId)
+                complition(nil)
             }
         }.resume()
     }
@@ -178,4 +178,48 @@ class NetworkManager {
 //            complition(responce.statusCode)
 //        }.resume()
 //    }
+    
+    enum GetRequestType: String {
+        case getMarks = "Cars/GetMarks"
+        case getModelNamesByMark = "Cars/GetModelNamesByMark"
+        case getColors = "Cars/GetColors"
+    }
+    
+    struct RequestParameter {
+        let key: String
+        let value: String
+    }
+    
+    func get<T: Decodable>(as networkRequest: GetRequestType, headers: [RequestParameter] = [], query parameters: [RequestParameter] = [], complition: @escaping (T) -> Void) {
+        var urlRowValue = urlString + networkRequest.rawValue
+        
+        if !parameters.isEmpty {
+            urlRowValue += "?\(parameters[0].key)=\(parameters[0].value)"
+            
+            for parameter in parameters[1...] {
+                urlRowValue += "+\(parameter.key)=\(parameter.value)"
+            }
+        }
+        
+        let url = URL(string: urlRowValue)!
+        let request: URLRequest = {
+            var request = URLRequest(url: url)
+            
+            for parameter in headers {
+                request.setValue(parameter.value, forHTTPHeaderField: parameter.key)
+            }
+            
+            return request
+        }()
+        
+        URLSession.shared.dataTask(with: request) { data, responce, error in
+            guard let responce = responce as? HTTPURLResponse, responce.statusCode == 200 else {
+                print("No data recieved, or there is an error")
+                return
+            }
+            if let data = data, let decoded = try? JSONDecoder().decode(T.self, from: data) {
+                complition(decoded)
+            }
+        }.resume()
+    }
 }

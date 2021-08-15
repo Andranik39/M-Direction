@@ -38,8 +38,8 @@ final class PaymantHistory: Account {
             let tableView = UITableView()
             tableView.dataSource = self
             tableView.delegate = self
-            tableView.register(AccountHistoryCell.self, forCellReuseIdentifier: AccountHistoryCell.identifier)
-            tableView.register(AccountHistoryCellDitailed.self, forCellReuseIdentifier: AccountHistoryCellDitailed.identifier)
+            tableView.register(PaymantHistoryCell.self, forCellReuseIdentifier: PaymantHistoryCell.identifier)
+            tableView.register(PaymantHistoryCellDitailed.self, forCellReuseIdentifier: PaymantHistoryCellDitailed.identifier)
             tableView.backgroundColor = .clear
             tableView.alwaysBounceVertical = false
 //            tableView.tableFooterView = UIView()

@@ -30,3 +30,12 @@ struct GenderCategories {
         case male, female
     }
 }
+
+struct RouteHistoryCategories {
+    let title: String
+    let value: RouteState
+    
+    enum RouteState: Int {
+        case current, finished, canceled
+    }
+}

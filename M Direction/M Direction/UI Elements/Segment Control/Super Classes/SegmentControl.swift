@@ -13,9 +13,11 @@ protocol SegmentControlDelegate {
 
 class SegmentControl: UIView {
     
-    var container = UIStackView()
+    var complition: ((Int) -> Void)?
+    
+    var container: UIStackView!
     var indicator: UIView?
-    var indicatorCenterX: NSLayoutConstraint?
+    private var indicatorCenterX: NSLayoutConstraint?
     private(set) var selectedSegment: Segment?
     
     override init(frame: CGRect) {
@@ -31,20 +33,34 @@ class SegmentControl: UIView {
     }
     
     private func setupStackView() {
-        container.axis = .horizontal
-        container.alignment = .center
-        container.pinTo(self)
+        container = {
+            let stack = UIStackView()
+            stack.axis = .horizontal
+            stack.alignment = .center
+//        stack.distribution = .equalSpacing
+            stack.pinTo(self)
+            
+            return stack
+        }()
     }
     
     func setupSubviews() {}
+    
+    func extendSelection() {}
 }
 
 extension SegmentControl: SegmentControlDelegate {
     func segmentDidSelect(_ segment: Segment) {
         selectedSegment?.deselect()
         indicatorCenterX?.isActive = false
-        selectedSegment = segment
-        indicatorCenterX = indicator?.centerXAnchor.constraint(equalTo: segment.centerXAnchor)
-        indicatorCenterX?.isActive = true
+//        UIView.animate(withDuration: 0.25) {
+            self.selectedSegment = segment
+            self.indicatorCenterX = self.indicator?.centerXAnchor.constraint(equalTo: segment.centerXAnchor)
+            self.indicatorCenterX?.isActive = true
+            self.extendSelection()
+//            self.layoutSubviews()
+//        }
+        guard let value = segment.value else { return }
+        complition?(value)
     }
 }

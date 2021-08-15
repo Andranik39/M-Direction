@@ -13,6 +13,7 @@ class Account: GradientedVC {
     
     private var menuButton: UIButton!
     private var coverView: UIView!
+    private var rootView: UIView!
     
     private lazy var width = 0.7 * view.frame.width
     private let navigationBarTintColor = UIColor(red: 0.169, green: 0.424, blue: 0.227, alpha: 1)
@@ -21,9 +22,10 @@ class Account: GradientedVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        rootView = UIApplication.shared.windows.first(where: { $0.isKeyWindow })
+        
         setupSubviews()
         setupNavigationBar()
-//        setupSubviews()
         setupCoverView()
         setupSideOutMenu()
 //        configureGestures()
@@ -35,7 +37,7 @@ class Account: GradientedVC {
             let topView = UIView()
             topView.backgroundColor = UIColor(red: 0.431, green: 0.725, blue: 0.62, alpha: 0.65)
             topView.pinTo(view, bottom: nil)
-            topView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor).isActive = true
+            topView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
             return topView
         }()
 
@@ -43,7 +45,7 @@ class Account: GradientedVC {
             let container = UIView()
             container.backgroundColor = UIColor(red: 0.431, green: 0.725, blue: 0.62, alpha: 0.4)
             container.pinTo(view, top: nil, bottom: nil)
-            container.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor).isActive = true
+            container.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
             container.heightAnchor.constraint(equalToConstant: 70).isActive = true
 
             return topView
@@ -56,24 +58,12 @@ class Account: GradientedVC {
             titleLabel.translatesAutoresizingMaskIntoConstraints = false
             container.addSubview(titleLabel)
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-            titleLabel.centerYAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 35).isActive = true
+            titleLabel.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 35).isActive = true
 
             return titleLabel
         }()
-
-//        let _: UIButton? = {
-//            let button = UIButton(type: .system)
-//            button.setImage(UIImage(systemName: "dollarsign.circle"), for: .normal)
-////            button.addTarget(MainMenu.self, action: #selector(), for: [.touchUpInside, .touchDragExit, .touchCancel])
-////            guard let button = trailingButton else { return nil }
-//            button.tintColor = navigationBarTintColor
-//            button.translatesAutoresizingMaskIntoConstraints = false
-//            view.addSubview(button)
-//            button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
-//            button.centerYAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 35).isActive = true
-//
-//            return button
-//        }()
+        
+        view.layoutMargins.top = view.safeAreaInsets.top + 70
     }
     
     private func setupCoverView() {
@@ -83,7 +73,7 @@ class Account: GradientedVC {
             let cover = UIView()
             cover.backgroundColor = .black
             cover.alpha = .zero
-            cover.pinTo(view)
+            cover.pinTo(rootView)
             cover.addGestureRecognizer(tapGesture)
             
             return cover
@@ -94,12 +84,16 @@ class Account: GradientedVC {
     
     private func setupSideOutMenu() {
         let hamburgerMenu = MainMenu()
-        addChild(hamburgerMenu)
-        let subview = hamburgerMenu.view
-        subview?.pinTo(view, leading: nil, trailing: nil)
-        subview?.widthAnchor.constraint(equalToConstant: width).isActive = true
+        hamburgerMenu.navigate = { nextVC in
+            self.hideMenu()
+            if !nextVC.isMember(of: Self.self) {
+                self.navigationController?.setViewControllers([nextVC], animated: true)
+            }
+        }
+        hamburgerMenu.pinTo(rootView, leading: nil, trailing: nil)
+        hamburgerMenu.widthAnchor.constraint(equalToConstant: width).isActive = true
         
-        menuLeadingAnchor = subview!.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -width)
+        menuLeadingAnchor = hamburgerMenu.leadingAnchor.constraint(equalTo: rootView.leadingAnchor, constant: -width)
         menuLeadingAnchor.isActive = true
     }
     
@@ -113,7 +107,7 @@ class Account: GradientedVC {
             button.translatesAutoresizingMaskIntoConstraints = false
             rootView.addSubview(button)
             button.leadingAnchor.constraint(equalTo: rootView.leadingAnchor, constant: 15).isActive = true
-            button.centerYAnchor.constraint(equalTo: rootView.layoutMarginsGuide.topAnchor, constant: 35).isActive = true
+            button.centerYAnchor.constraint(equalTo: rootView.safeAreaLayoutGuide.topAnchor, constant: 35).isActive = true
             
             return button
         }()
@@ -150,7 +144,7 @@ class Account: GradientedVC {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut) {
             self.menuLeadingAnchor.constant = 0
             self.coverView.alpha = 0.4
-            self.view.layoutIfNeeded()
+            self.rootView.layoutIfNeeded()
         }
     }
     
@@ -159,7 +153,7 @@ class Account: GradientedVC {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut) {
             self.menuLeadingAnchor.constant -= self.width
             self.coverView.alpha = .zero
-            self.view.layoutIfNeeded()
+            self.rootView.layoutIfNeeded()
         }
     }
     

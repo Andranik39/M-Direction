@@ -23,36 +23,8 @@ class MenuItemCell: UITableViewCell {
         super.init(coder: coder)
         setupSubviews()
     }
-    
-//    @available(iOS 14.0, *)
-//    override func updateConfiguration(using state: UICellConfigurationState) {
-//        var bgc = UIBackgroundConfiguration.listPlainCell().updated(for: state)
-//
-//        if state.isHighlighted || state.isSelected {
-//            bgc.backgroundColor = UIColor(red: 0.431, green: 0.725, blue: 0.62, alpha: 0.65)
-//        } else {
-//            bgc.backgroundColor = .clear
-//        }
-//        backgroundConfiguration = bgc
-//    }
 
     private func setupSubviews() {
-        let background: UIView = {
-            let background = UIView()
-            background.backgroundColor = UIColor(red: 0.902, green: 0.996, blue: 0.869, alpha: 1)
-
-            return background
-        }()
-        backgroundView = background
-
-        let highlighted: UIView = {
-            let highlighted = UIView()
-            highlighted.backgroundColor = UIColor(red: 0.431, green: 0.725, blue: 0.62, alpha: 0.65)
-
-            return highlighted
-        }()
-        selectedBackgroundView = highlighted
-        
         shortcut = {
             let shortcut = UIView()
             shortcut.backgroundColor = .systemGreen

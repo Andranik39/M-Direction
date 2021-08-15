@@ -29,7 +29,12 @@ let genderCategories = [
     GenderCategories(title: "Իգական", value: .female)
 ]
 
-enum UserType: String {
-    case passenger = "Passenger"
-    case driver = "Driver"
+let routeHistoryCategories = [
+    RouteHistoryCategories(title: "Ընթացիկ", value: .current),
+    RouteHistoryCategories(title: "Ավարտված", value: .finished),
+    RouteHistoryCategories(title: "Չեղարկված", value: .canceled)
+]
+
+enum UserType: Int {
+    case passenger, driver
 }

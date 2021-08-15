@@ -10,12 +10,13 @@ import UIKit
 final class RegistrationVC: GradientedVC {
     
     private var input: TextField!
-    private var userTypes: UserTypeControl!
+    private var userType = 0
     private let network = NetworkManager.shared
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
+        navigationController?.isNavigationBarHidden = false
     }
     
     private func setupSubviews() {
@@ -33,8 +34,11 @@ final class RegistrationVC: GradientedVC {
             return title
         }()
         
-        userTypes = {
+        let userTypes: UserTypeControl = {
             let userTypes = UserTypeControl()
+            userTypes.complition = { rawValue in
+                self.userType = rawValue
+            }
             userTypes.translatesAutoresizingMaskIntoConstraints = false
             content.addSubview(userTypes)
             userTypes.centerXAnchor.constraint(equalTo: content.centerXAnchor).isActive = true
@@ -61,7 +65,7 @@ final class RegistrationVC: GradientedVC {
         input = {
             let input = TextField()
             input.translatesAutoresizingMaskIntoConstraints = false
-            input.delegate = input
+//            input.delegate = input
             input.placeholder = "(+374) 00 000 000"
             
             content.addSubview(input)
@@ -136,10 +140,8 @@ final class RegistrationVC: GradientedVC {
             return
         }
         
-        guard let segment = userTypes.selectedSegment as? UserSegment else { return }
-        guard let type = segment.state else { return }
-        
         var requestType: NetworkManager.RequestType!
+        guard let type = UserType.init(rawValue: userType) else { return }
         
         switch type {
         case .driver:
@@ -149,7 +151,7 @@ final class RegistrationVC: GradientedVC {
         }
         
         network.post(data: encoded, as: requestType) { statusCode in
-//            print(statusCode ?? "nothing was recieved")
+            print(statusCode ?? "nothing was recieved")
             if statusCode == 200 {
                 DispatchQueue.main.async {
                     self.navigateToTheNextViewController(type: type)

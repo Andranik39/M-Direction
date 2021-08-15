@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class GetRoute: Account {
+final class SingedIn: Account {
     override func setupSubviews() {
         title = "Ընտրել երթուղին"
         

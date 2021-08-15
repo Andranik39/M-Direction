@@ -9,27 +9,36 @@ import UIKit
 
 class GradientedVC: UIViewController {
     
-    let content = ContainerView()
+    var content: ContainerView!
+    var activeTextField: UITextField?
+    private var scrollView: UIScrollView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupGradient()
         setupScrollView()
+        registerForKeyboardNotifications()
     }
     
     private func setupScrollView() {
-        let scrollView = UIScrollView()
-        scrollView.pinTo(view)
-//        scrollView.alwaysBounceVertical = true
+        scrollView = {
+            let scrollView = UIScrollView()
+            scrollView.pinTo(view)
+            
+            return scrollView
+        }()
         
-        content.translatesAutoresizingMaskIntoConstraints = false
-//        content.backgroundColor = .systemTeal
-        scrollView.addSubview(content)
-        
-        content.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        content.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-        content.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
-        content.bottomAnchor.constraint(greaterThanOrEqualTo: scrollView.bottomAnchor).isActive = true
+        content = {
+            let content = ContainerView()
+            content.translatesAutoresizingMaskIntoConstraints = false
+            scrollView.addSubview(content)
+            content.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+            content.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+            content.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
+            content.bottomAnchor.constraint(greaterThanOrEqualTo: scrollView.bottomAnchor).isActive = true
+            
+            return content
+        }()
     }
 
     private func setupGradient() {
@@ -44,6 +53,33 @@ class GradientedVC: UIViewController {
         gradient.frame = view.bounds
         view.layer.addSublayer(gradient)
     }
+    
+    private func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown(_:)), name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc private func keyboardWasShown(_ notification: Notification) {
+        if let info = notification.userInfo, let kbSize = info[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+            let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: kbSize.height, right: 0)
+            scrollView.contentInset = contentInsets
+            scrollView.scrollIndicatorInsets = contentInsets
+            
+            if let hiddenField = activeTextField {
+                print(hiddenField.frame)
+//                let aview = UIView(frame: hiddenField.frame)
+//                aview.backgroundColor = .red
+//                content.addSubview(aview)
+//                let me = CGRect(x: 0, y: content.frame.height - 50, width: 390, height: 50)
+//                scrollView.scrollRectToVisible(hiddenField.frame, animated: true)
+            }
+        }
+    }
+    
+    @objc private func keyboardWillBeHidden() {
+        scrollView.contentInset = .zero
+        scrollView.scrollIndicatorInsets = .zero
+    }
 }
 
 final class ContainerView: UIView {
@@ -51,8 +87,4 @@ final class ContainerView: UIView {
         super.touchesEnded(touches, with: event)
         endEditing(true)
     }
-}
-
-class IdentifiableUserViewController: GradientedVC {
-    var id: Int?
 }

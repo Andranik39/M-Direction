@@ -12,6 +12,7 @@ final class OTCAndPassword: GradientedVC {
     var phone: String?
     var userType: UserType?
     private var otc: TextField!
+    private var name: TextField?
     private var password: TextField!
     private var repeatPassword: TextField!
     private let network = NetworkManager.shared
@@ -35,32 +36,53 @@ final class OTCAndPassword: GradientedVC {
             return title
         }()
         
+        let textFieldStack: UIStackView = {
+            let stack = UIStackView()
+            stack.alignment = .center
+            stack.distribution = .equalSpacing
+            stack.axis = .vertical
+            stack.spacing = 35
+            stack.translatesAutoresizingMaskIntoConstraints = false
+            
+            content.addSubview(stack)
+            
+            stack.centerXAnchor.constraint(equalTo: content.centerXAnchor).isActive = true
+            stack.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 38).isActive = true
+            stack.leadingAnchor.constraint(equalTo: content.leadingAnchor, constant: 50).isActive = true
+            
+            return stack
+        }()
+        
         otc = {
             let otc = TextField()
             otc.translatesAutoresizingMaskIntoConstraints = false
             otc.placeholder = "Հաստատման կոդ"
-            otc.delegate = otc
-            
-            content.addSubview(otc)
-            
-            otc.centerXAnchor.constraint(equalTo: content.centerXAnchor).isActive = true
-            otc.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 38).isActive = true
-            otc.leadingAnchor.constraint(equalTo: content.leadingAnchor, constant: 50).isActive = true
+//            otc.delegate = otc
+            textFieldStack.addArrangedSubview(otc)
+            otc.widthAnchor.constraint(equalTo: textFieldStack.widthAnchor).isActive = true
             
             return otc
         }()
+        
+        if userType == .passenger {
+            name = {
+                let name = TextField()
+                name.translatesAutoresizingMaskIntoConstraints = false
+                name.placeholder = "Անուն"
+//                name.delegate = name
+                textFieldStack.addArrangedSubview(name)
+                name.widthAnchor.constraint(equalTo: textFieldStack.widthAnchor).isActive = true
+                
+                return name
+            }()
+        }
         
         password = {
             let password = TextField()
             password.translatesAutoresizingMaskIntoConstraints = false
             password.placeholder = "Գաղտնաբառ"
-//        password.isSecureTextEntry = true
-            
-            content.addSubview(password)
-            
-            password.centerXAnchor.constraint(equalTo: content.centerXAnchor).isActive = true
-            password.topAnchor.constraint(equalTo: otc.bottomAnchor, constant: 35).isActive = true
-            password.leadingAnchor.constraint(equalTo: content.leadingAnchor, constant: 50).isActive = true
+            textFieldStack.addArrangedSubview(password)
+            password.widthAnchor.constraint(equalTo: textFieldStack.widthAnchor).isActive = true
             
             return password
         }()
@@ -69,14 +91,9 @@ final class OTCAndPassword: GradientedVC {
             let repeatPassword = TextField()
             repeatPassword.translatesAutoresizingMaskIntoConstraints = false
             repeatPassword.placeholder = "Կրկնել գաղտնաբառը"
-            repeatPassword.delegate = repeatPassword
-//        repeatPassword.isSecureTextEntry = true
-            
-            content.addSubview(repeatPassword)
-            
-            repeatPassword.centerXAnchor.constraint(equalTo: content.centerXAnchor).isActive = true
-            repeatPassword.topAnchor.constraint(equalTo: password.bottomAnchor, constant: 35).isActive = true
-            repeatPassword.leadingAnchor.constraint(equalTo: content.leadingAnchor, constant: 50).isActive = true
+//            repeatPassword.delegate = repeatPassword
+            textFieldStack.addArrangedSubview(repeatPassword)
+            repeatPassword.widthAnchor.constraint(equalTo: textFieldStack.widthAnchor).isActive = true
             
             return repeatPassword
         }()
@@ -120,39 +137,44 @@ final class OTCAndPassword: GradientedVC {
         
         guard let phone = phone else { return }
         guard let recievedCode = otc.text else { return }
-        let data = ValidateActivationCode(phone: phone, activationCode: recievedCode)
+        guard let newPassword = password.text, newPassword == repeatPassword.text else {
+            print("check password correctness")
+            return
+        }
+        
+        var data = ValidateActivationCode(phone: phone, activationCode: recievedCode, password: newPassword)
+        
+        if let usersName = name?.text {
+            data.name = usersName
+        }
         
         guard let encoded = try? JSONEncoder().encode(data) else {
             print("Failed to encode")
             return
         }
         
-        guard let newPassword = password.text, newPassword == repeatPassword.text else {
-            print("check password correctness")
-            return
-        }
-        
         guard let userType = userType else { return }
         network.validateActivationCode(userType, data: encoded) { id in
-            guard let id = id else { return }
-            print(id)
             DispatchQueue.main.async {
-                self.navigateToTheNextViewController(type: userType, id: id, password: newPassword)
+                self.navigateToTheNextViewController(type: userType, id: id)
             }
         }
     }
     
-    private func navigateToTheNextViewController(type: UserType, id: Int, password: String) {
-        let nextVC: IdentifiableUserViewController
+    private func navigateToTheNextViewController(type: UserType, id: Int?) {
+        let nextVC: UIViewController
         
         switch type {
         case .driver:
             nextVC = DriverPersonalInfo()
+            guard let id = id else { return }
+            UserDefaults.standard.removeObject(forKey: "id")
+            UserDefaults.standard.setValue(id, forKey: "id")
         case .passenger:
-            nextVC = UserFinal()
+            nextVC = GetRoute()
+            navigationController?.isNavigationBarHidden = true
         }
         
-        nextVC.id = id
         navigationController?.show(nextVC, sender: nil)
     }
     

@@ -18,6 +18,13 @@ final class TextField: UITextField {
         primarySetup()
     }
     
+    var newDelegate: TextFieldMainDelegate? {
+        didSet {
+            self.delegate = newDelegate
+        }
+    }
+    
+    
     private func primarySetup() {
         backgroundColor = UIColor(red: 0.728, green: 0.771, blue: 0.721, alpha: 0.5)
         heightAnchor.constraint(equalToConstant: 50).isActive = true

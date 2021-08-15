@@ -21,7 +21,7 @@ extension PaymantHistory: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: AccountHistoryCell.identifier, for: indexPath) as! AccountHistoryCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: PaymantHistoryCell.identifier, for: indexPath) as! PaymantHistoryCell
             cell.setup(with: data[indexPath.section].title)
             cell.backgroundColor = .clear
             let view = UIView()
@@ -43,7 +43,7 @@ extension PaymantHistory: UITableViewDataSource {
             
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: AccountHistoryCellDitailed.identifier, for: indexPath) as! AccountHistoryCellDitailed
+            let cell = tableView.dequeueReusableCell(withIdentifier: PaymantHistoryCellDitailed.identifier, for: indexPath) as! PaymantHistoryCellDitailed
             cell.setup(with: data[indexPath.section].rows[indexPath.row - 1])
             cell.backgroundColor = .clear
             let view = UIView()

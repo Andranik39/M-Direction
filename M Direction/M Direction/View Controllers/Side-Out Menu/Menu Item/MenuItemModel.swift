@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+struct MenuItem {
+    var image: String?
+    let title: String
+    let value: ItemValues
+    
+    enum ItemValues {
+        case routeHistory, accountHistory, bonuses, lenguage, contactUs, settings
+    }
+}

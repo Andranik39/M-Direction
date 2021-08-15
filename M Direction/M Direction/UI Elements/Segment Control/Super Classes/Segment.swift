@@ -10,6 +10,7 @@ import UIKit
 class Segment: UIView {
     
     var delegate: SegmentControlDelegate?
+    var value: Int?
     
     override init(frame: CGRect) {
         super.init(frame: frame)

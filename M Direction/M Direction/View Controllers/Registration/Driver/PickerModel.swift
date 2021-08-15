@@ -7,10 +7,17 @@
 
 import UIKit
 
-final class PickerModel: UIPickerView {
-    private var rows = [String]()
+protocol Pickerable {
+    var id: Int { get set }
+    var name: String { get set }
+}
+
+final class Picker: UIPickerView {
     
-    convenience init(_ rows: [String]) {
+    private var rows = [Pickerable]()
+    var complition: ((Int, String) -> Void)?
+    
+    convenience init(_ rows: [Pickerable]) {
         self.init()
         self.rows = rows
         translatesAutoresizingMaskIntoConstraints = false
@@ -20,7 +27,7 @@ final class PickerModel: UIPickerView {
     }
 }
 
-extension PickerModel: UIPickerViewDataSource {
+extension Picker: UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         1
     }
@@ -30,12 +37,12 @@ extension PickerModel: UIPickerViewDataSource {
     }
 }
 
-extension PickerModel: UIPickerViewDelegate {
+extension Picker: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        rows[row]
+        rows[row].name
     }
     
-//    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        <#code#>
-//    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        complition?(rows[row].id, rows[row].name)
+    }
 }

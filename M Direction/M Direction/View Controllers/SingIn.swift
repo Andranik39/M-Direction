@@ -11,7 +11,7 @@ final class SingIn: GradientedVC {
     
     private var phone: TextField!
     private var password: TextField!
-    private var userTypes: UserTypeControl!
+    private var userType = 0
     private let network = NetworkManager.shared
 
     override func viewDidLoad() {
@@ -34,8 +34,11 @@ final class SingIn: GradientedVC {
             return title
         }()
         
-        userTypes = {
+        let userTypes: UserTypeControl = {
             let userTypes = UserTypeControl()
+            userTypes.complition = { rawValue in
+                self.userType = rawValue
+            }
             userTypes.translatesAutoresizingMaskIntoConstraints = false
             content.addSubview(userTypes)
             userTypes.centerXAnchor.constraint(equalTo: content.centerXAnchor).isActive = true
@@ -46,7 +49,7 @@ final class SingIn: GradientedVC {
         phone = {
             let input = TextField()
             input.translatesAutoresizingMaskIntoConstraints = false
-            input.delegate = input
+//            input.delegate = input
             input.placeholder = "(+374) 00 000 000"
             
             content.addSubview(input)
@@ -61,7 +64,7 @@ final class SingIn: GradientedVC {
         password = {
             let input = TextField()
             input.translatesAutoresizingMaskIntoConstraints = false
-            input.delegate = input
+//            input.delegate = input
             input.placeholder = "Գաղտնաբառ"
             
             content.addSubview(input)
@@ -109,9 +112,7 @@ final class SingIn: GradientedVC {
             return
         }
         
-        guard let segment = userTypes.selectedSegment as? UserSegment else { return }
-        guard let type = segment.state else { return }
-        
+        guard let type = UserType.init(rawValue: userType) else { return }
         var requestType: NetworkManager.RequestType!
         
         switch type {

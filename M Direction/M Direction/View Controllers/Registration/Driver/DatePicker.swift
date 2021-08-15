@@ -31,7 +31,7 @@ final class DatePicker: UIDatePicker {
         }()
         
         datePickerMode = .date
-        maximumDate = Date()
+        maximumDate = Calendar.current.date(byAdding: .year, value: -18, to: Date())
         if #available(iOS 13.4, *) {
             preferredDatePickerStyle = .wheels
         }

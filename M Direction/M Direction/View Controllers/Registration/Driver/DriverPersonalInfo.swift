@@ -7,12 +7,12 @@
 
 import UIKit
 
-final class DriverPersonalInfo: IdentifiableUserViewController {
+final class DriverPersonalInfo: GradientedVC {
     
     private var firstName: TextField!
     private var lastName: TextField!
-    private var gender: GenderControl!
-//    private var birthday: UIDatePicker!
+    private var gender = 0
+    private var birthday: String?
     private let network = NetworkManager.shared
 
     override func viewDidLoad() {
@@ -39,7 +39,7 @@ final class DriverPersonalInfo: IdentifiableUserViewController {
             let firstName = TextField()
             firstName.translatesAutoresizingMaskIntoConstraints = false
             firstName.placeholder = "Անուն"
-            firstName.delegate = firstName
+//            firstName.delegate = firstName
             
             content.addSubview(firstName)
             
@@ -55,7 +55,7 @@ final class DriverPersonalInfo: IdentifiableUserViewController {
             let lastName = TextField()
             lastName.translatesAutoresizingMaskIntoConstraints = false
             lastName.placeholder = "Ազգանուն"
-            lastName.delegate = lastName
+//            lastName.delegate = lastName
             
             content.addSubview(lastName)
             
@@ -66,8 +66,11 @@ final class DriverPersonalInfo: IdentifiableUserViewController {
             return lastName
         }()
         
-        gender = {
+        let gender: GenderControl = {
             let gender = GenderControl()
+            gender.complition = { rawValue in
+                self.gender = rawValue
+            }
             gender.translatesAutoresizingMaskIntoConstraints = false
             
             content.addSubview(gender)
@@ -78,31 +81,51 @@ final class DriverPersonalInfo: IdentifiableUserViewController {
             return gender
         }()
         
-//        birthday = {
-//            let datePicker = UIDatePicker()
-//            datePicker.datePickerMode = .date
-//            datePicker.tintColor = .black
-//            datePicker.translatesAutoresizingMaskIntoConstraints = false
-//
-//            content.addSubview(datePicker)
-//
-//            datePicker.centerXAnchor.constraint(equalTo: content.centerXAnchor).isActive = true
-//            datePicker.topAnchor.constraint(equalTo: gender.bottomAnchor, constant: 38).isActive = true
-//
-//            return datePicker
-//        }()
-//        let _: AddImage = {
-//            let nextButton = AddImage()
-//            content.addSubview(nextButton)
-//
-//            nextButton.centerXAnchor.constraint(equalTo: content.centerXAnchor).isActive = true
-//            nextButton.topAnchor.constraint(equalTo: gender.bottomAnchor, constant: 38).isActive = true
-//            nextButton.addTarget(self, action: #selector(showActionSheet), for: [.touchDown, .touchDragEnter])
-//
-//            nextButton.bottomAnchor.constraint(equalTo: content.bottomAnchor).isActive = true
-//
-//            return nextButton
-//        }()
+        let stack: UIStackView = {
+            let stack = UIStackView()
+            stack.axis = .horizontal
+            stack.alignment = .center
+            stack.distribution = .fill
+            stack.spacing = 10
+            stack.translatesAutoresizingMaskIntoConstraints = false
+
+            content.addSubview(stack)
+
+            stack.centerXAnchor.constraint(equalTo: content.centerXAnchor).isActive = true
+            stack.leadingAnchor.constraint(equalTo: content.leadingAnchor, constant: 50).isActive = true
+            stack.topAnchor.constraint(equalTo: gender.bottomAnchor, constant: 38).isActive = true
+
+            return stack
+        }()
+        
+        let _: UILabel = {
+            let label = UILabel()
+            label.text = "Ծննդյան օր"
+            label.font = .systemFont(ofSize: 20)
+            label.textColor = UIColor(red: 0.267, green: 0.267, blue: 0.267, alpha: 1)
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.setContentHuggingPriority(.sceneSizeStayPut, for: .horizontal)
+            stack.addArrangedSubview(label)
+            
+            return label
+        }()
+        
+        let birthdayField: TextField = {
+            let date = TextField()
+            date.tintColor = .clear
+            date.translatesAutoresizingMaskIntoConstraints = false
+            stack.addArrangedSubview(date)
+            
+            let input = DatePicker()
+            input.complition = { value in
+                date.text = value
+                self.birthday = value
+            }
+            date.inputView = input
+
+            return date
+        }()
+        
         let _: Button = {
             let nextButton = Button()
             nextButton.setup(with: "Առաջ")
@@ -111,48 +134,33 @@ final class DriverPersonalInfo: IdentifiableUserViewController {
             content.addSubview(nextButton)
 
             nextButton.centerXAnchor.constraint(equalTo: content.centerXAnchor).isActive = true
-            nextButton.topAnchor.constraint(equalTo: gender.bottomAnchor, constant: 38).isActive = true
+            nextButton.topAnchor.constraint(equalTo: birthdayField.bottomAnchor, constant: 38).isActive = true
             nextButton.leadingAnchor.constraint(equalTo: content.leadingAnchor, constant: 50).isActive = true
 
             nextButton.bottomAnchor.constraint(equalTo: content.bottomAnchor).isActive = true
 
-            nextButton.addTarget(self, action: #selector(registerDriverFirstStage), for: [.touchUpInside, .touchDragExit, .touchCancel])
+            nextButton.addTarget(self, action: #selector(registerDriverSecondStage), for: [.touchUpInside, .touchDragExit, .touchCancel])
 //            nextButton.addTarget(self, action: #selector(imc), for: [.touchUpInside, .touchDragExit, .touchCancel])
 
             return nextButton
         }()
     }
     
-//    @objc private func showActionSheet() {
-//        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
-//        let gallery = UIAlertAction(title: "From gallery", style: .default) { _ in
-//            print("From gallery")
-//        }
-//        let camera = UIAlertAction(title: "Take Photo", style: .default) { _ in
-//            print("Take a photo")
-//        }
-//        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
-//
-//        actionSheet.addAction(gallery)
-//        actionSheet.addAction(camera)
-//        actionSheet.addAction(cancel)
-//
-//        present(actionSheet, animated: true)
-//    }
-    @objc private func registerDriverFirstStage() {
+    @objc private func registerDriverSecondStage() {
         view.endEditing(true)
         
-        guard let id = id else { return }
+        guard let id = UserDefaults.standard.object(forKey: "id") as? Int else { return }
         guard let name = firstName.text, !name.isEmpty else { return }
         guard let surname = lastName.text else { return }
-        guard let segment = gender.selectedSegment as? GenderSegment else { return }
-        guard let gender = segment.state else { return }
+//        guard let gender = gender else { return }
+        guard let birthdayTitle = birthday, let birthday = convertDate(birthdayTitle) else { return }
         
         let data = RegisterDriverSecondStage(id: id,
                                              firstName: name,
                                              lastName: surname,
-                                             gender: gender.rawValue)
-        
+                                             gender: gender,
+                                             birthday: birthday)
+        print(data)
         guard let encoded = try? JSONEncoder().encode(data) else {
             print("Failed to encode")
             return
@@ -172,15 +180,18 @@ final class DriverPersonalInfo: IdentifiableUserViewController {
         view.endEditing(true)
             
         let nextVC = DriversLicense()
-        nextVC.id = id
         
         navigationController?.show(nextVC, sender: nil)
     }
     
-//    let imagePickerCoordinator = ImagePickerCoordinator.shared
-//    @objc func imc() {
-//        let picker = UIImagePickerController()
-//        picker.delegate = imagePickerCoordinator
-//        present(picker, animated: true)
-//    }
+    private func convertDate(_ date: String) -> String? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MM.yyyy"
+        
+        guard let value = formatter.date(from: date) else { return nil }
+        
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+        
+        return formatter.string(from: value)
+    }
 }

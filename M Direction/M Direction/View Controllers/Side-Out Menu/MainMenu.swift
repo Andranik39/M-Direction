@@ -7,14 +7,27 @@
 
 import UIKit
 
-class MainMenu: UIViewController {
+class MainMenu: UIView {
     
-    private(set) var menuItems = ["Երթուղու պատմություն", "Հաշվի պատմություն", "Միավորներ", "Հայերեն", "Հետադարձ կապ", "Կարգավորումներ"]
+    var navigate: ((UIViewController) -> Void)?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        navigationItem.largeTitleDisplayMode = .never
+    private(set) var menuItems = [
+        MenuItem(title: "Երթուղու պատմություն", value: .routeHistory),
+        MenuItem(title: "Հաշվի պատմություն", value: .accountHistory),
+        MenuItem(title: "Միավորներ", value: .bonuses),
+        MenuItem(title: "Հայերեն", value: .lenguage),
+        MenuItem(title: "Հետադարձ կապ", value: .contactUs),
+        MenuItem(title: "Կարգավորումներ", value: .settings)
+    ]
+    
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupSubviews()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
         setupSubviews()
     }
     
@@ -23,21 +36,31 @@ class MainMenu: UIViewController {
             let header = UIView()
             header.backgroundColor = UIColor(red: 0.867, green: 0.973, blue: 0.851, alpha: 1)
             
-            header.pinTo(view, bottom: nil)
+            header.pinTo(self, bottom: nil)
             header.heightAnchor.constraint(equalToConstant: 150).isActive = true
             
             return header
         }()
         
+//        let _: UILabel = {
+//            let name = UILabel()
+//            name.text = "Աշոտ ID-089677"
+//            name.textColor = UIColor(red: 0.104, green: 0.104, blue: 0.104, alpha: 1)
+//            name.font = .systemFont(ofSize: 20)
+//            name.pinTo(header, leading: 15, top: nil, trailing: nil, bottom: -15)
+//            
+//            return name
+//        }()
+        
         let _: UITableView = {
             let tableView = UITableView()
             tableView.dataSource = self
             tableView.delegate = self
-            tableView.register(MenuItem.self, forCellReuseIdentifier: MenuItem.identifier)
+            tableView.register(MenuItemCell.self, forCellReuseIdentifier: MenuItemCell.identifier)
             tableView.backgroundColor = UIColor(red: 0.902, green: 0.996, blue: 0.869, alpha: 1)
             tableView.separatorStyle = .none
             
-            tableView.pinTo(view, top: nil)
+            tableView.pinTo(self, top: nil)
             tableView.topAnchor.constraint(equalTo: header.bottomAnchor).isActive = true
             
             return tableView

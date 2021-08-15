@@ -18,9 +18,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         //        guard let _ = (scene as? UIWindowScene) else { return }
         
-//        let rootView = MainMenu()
-        let rootView = GetRoute()
-//        let rootView = DriverPersonalInfo()
+//        let rootView = GetRoute()
+        let rootView = CalendarPicker()
+//        let rootView = RouteHistory()
+//        let rootView = PaymantHistory()
+//        let rootView = DriversCar()
 //        let rootView = MainVC()
 
         if let windowScene = scene as? UIWindowScene {

@@ -10,7 +10,6 @@ import UIKit
 final class GenderSegment: Segment {
     
     private let title = UILabel()
-    private(set) var state: GenderCategories.Gender?
     
     override func setupSubviews() {
         title.font = .systemFont(ofSize: 20)
@@ -23,6 +22,6 @@ final class GenderSegment: Segment {
     
     func setup(with model: GenderCategories) {
         title.text = model.title
-        state = model.value
+        value = model.value.rawValue
     }
 }

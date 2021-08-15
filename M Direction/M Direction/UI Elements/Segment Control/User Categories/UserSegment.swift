@@ -10,7 +10,6 @@ import UIKit
 final class UserSegment: Segment {
     
     private let title = UILabel()
-    private(set) var state: UserType?
     
     override func setupSubviews() {
         title.font = .systemFont(ofSize: 26)
@@ -23,6 +22,6 @@ final class UserSegment: Segment {
     
     func setup(with model: UserCategories) {
         title.text = model.title
-        state = model.value
+        value = model.value.rawValue
     }
 }

@@ -13,6 +13,7 @@ final class GetRoute: Account {
     private var destination: TextField!
     private(set) var hour: UIPickerView!
     private(set) var minute: UIPickerView!
+    private var selectedSeats: [UIView]?
     
     override func setupSubviews() {
         title = "Ընտրել երթուղին"
@@ -21,16 +22,16 @@ final class GetRoute: Account {
         source = {
             let source = TextField()
             source.placeholder = "Որտեղի՞ց"
-            source.delegate = source
+//            source.delegate = source
             source.pinTo(content, leading: nil, top: nil, trailing: -40, bottom: nil)
             source.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 40).isActive = true
             
             return source
         }()
         
-        let sourceShortcut: UIView = {
-            let shortcut = UIView()
-            shortcut.backgroundColor = .systemYellow
+        let sourceShortcut: UIImageView = {
+            let shortcut = UIImageView()
+            shortcut.image = UIImage(named: "Source")
             shortcut.widthAnchor.constraint(equalToConstant: 20).isActive = true
             shortcut.heightAnchor.constraint(equalToConstant: 20).isActive = true
             shortcut.pinTo(content, leading: 20, top: nil, trailing: nil, bottom: nil)
@@ -43,7 +44,7 @@ final class GetRoute: Account {
         destination = {
             let destination = TextField()
             destination.placeholder = "Դեպի ու՞ր"
-            destination.delegate = destination
+//            destination.delegate = destination
             destination.pinTo(content, leading: nil, top: nil, trailing: -40, bottom: nil)
             destination.widthAnchor.constraint(equalTo: source.widthAnchor).isActive = true
             destination.topAnchor.constraint(equalTo: source.bottomAnchor, constant: 20).isActive = true
@@ -51,11 +52,9 @@ final class GetRoute: Account {
             return destination
         }()
         
-        let destinationShortcut: UIView = {
-            let shortcut = UIView()
-            shortcut.backgroundColor = .systemYellow
-            shortcut.widthAnchor.constraint(equalToConstant: 20).isActive = true
-            shortcut.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        let destinationShortcut: UIImageView = {
+            let shortcut = UIImageView()
+            shortcut.image = UIImage(named: "Destination")
             shortcut.pinTo(content, leading: nil, top: nil, trailing: nil, bottom: nil)
             shortcut.centerYAnchor.constraint(equalTo: destination.centerYAnchor).isActive = true
             shortcut.centerXAnchor.constraint(equalTo: sourceShortcut.centerXAnchor).isActive = true
@@ -80,7 +79,9 @@ final class GetRoute: Account {
         for _ in 0...2 {
             let _: UIView = {
                 let shortcut = UIView()
-                shortcut.backgroundColor = .systemTeal
+                shortcut.layer.cornerRadius = 4
+                shortcut.layer.masksToBounds = true
+                shortcut.backgroundColor = UIColor(red: 0.769, green: 0.769, blue: 0.769, alpha: 1)
                 shortcut.translatesAutoresizingMaskIntoConstraints = false
                 shortcut.widthAnchor.constraint(equalToConstant: 8).isActive = true
                 shortcut.heightAnchor.constraint(equalToConstant: 8).isActive = true
@@ -197,16 +198,40 @@ final class GetRoute: Account {
             return label
         }()
         
-        let pickSeatLabel: UILabel = {
+        let container: UIStackView = {
+            let container = UIStackView()
+            container.distribution = .fillProportionally
+            container.axis = .horizontal
+            container.spacing = -25
+            container.alignment = .center
+            container.pinTo(content, leading: 45, top: nil, trailing: -45, bottom: nil)
+            container.topAnchor.constraint(equalTo: mainStack.bottomAnchor, constant: 30).isActive = true
+            
+            return container
+        }()
+        
+        let _: UILabel = {
             let label = UILabel()
-            label.text = "Ընտրել մեքենայում առկա զբաղված տեղերը"
+            label.text = "Ընտրել մեքենայում\nառկա զբաղված տեղերը"
             label.textColor = UIColor(red: 0.267, green: 0.267, blue: 0.267, alpha: 1)
             label.numberOfLines = 0
             label.font = .systemFont(ofSize: 22)
-            label.pinTo(content, leading: 45, top: nil, trailing: 45, bottom: nil)
-            label.topAnchor.constraint(equalTo: mainStack.bottomAnchor, constant: 30).isActive = true
+            container.addArrangedSubview(label)
             
             return label
+        }()
+        
+        let _: UIButton = {
+            let button = UIButton(type: .system)
+            button.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
+            button.tintColor = UIColor(red: 0.204, green: 0.812, blue: 0.286, alpha: 1)
+            container.addArrangedSubview(button)
+            button.widthAnchor.constraint(equalToConstant: 32).isActive = true
+            button.heightAnchor.constraint(equalToConstant: 32).isActive = true
+            
+            button.addTarget(self, action: #selector(selectPlace), for: [.touchUpInside, .touchDragExit, .touchCancel])
+            
+            return button
         }()
         
         let _: Button = {
@@ -217,14 +242,31 @@ final class GetRoute: Account {
             content.addSubview(nextButton)
             
             nextButton.centerXAnchor.constraint(equalTo: content.centerXAnchor).isActive = true
-            nextButton.topAnchor.constraint(equalTo: pickSeatLabel.bottomAnchor, constant: 38).isActive = true
+            nextButton.topAnchor.constraint(equalTo: container.bottomAnchor, constant: 38).isActive = true
             nextButton.leadingAnchor.constraint(equalTo: content.leadingAnchor, constant: 50).isActive = true
             
             nextButton.bottomAnchor.constraint(equalTo: content.bottomAnchor).isActive = true
             
-//            nextButton.addTarget(self, action: #selector(validateActivationCode), for: [.touchUpInside, .touchDragExit, .touchCancel])
+            nextButton.addTarget(self, action: #selector(confirm), for: [.touchUpInside, .touchDragExit, .touchCancel])
             
             return nextButton
         }()
+    }
+    
+    @objc private func selectPlace() {
+        guard let rootView = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+        let car = PlaceSelection()
+        car.confirmSelection = { seats in
+            self.selectedSeats = seats
+        }
+        car.pinTo(rootView)
+    }
+    
+    @objc private func confirm() {
+        print((selectedSeats ?? []).count)
+        guard let rootView = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+        let alert = ConfirmationAlert()
+        alert.pinTo(rootView)
+        alert.top = view.layoutMarginsGuide.topAnchor
     }
 }

@@ -72,7 +72,7 @@ final class PaymantHistoryCellDitailed: UITableViewCell {
         }()
     }
 
-    func setup(with item: AccountHistory.Row) {
+    func setup(with item: PaymantHistory.Row) {
         route.text = item.route
         time.text = item.time
         if item.isSpent {
